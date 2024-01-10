@@ -1,23 +1,4 @@
 #!/usr/bin/env bash
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-#
-
 set -e
 
 script_dir_path="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
@@ -67,6 +48,7 @@ if [ ! -z ${KOGITO_VERSION} ]; then
         s/$complete_pattern/$complete_replace/
         }" pom.xml
 fi
+
 
 # if the image being built is X86_64, remove the arm64 maven dependencies from
 # kogito-addons-quarkus-jobs-service-embedded and kogito-addons-quarkus-data-index-inmemory
@@ -122,6 +104,8 @@ fi
 if [ "${SCRIPT_DEBUG^^}" = "TRUE" ]; then
     cat pom.xml
 fi
+
+source "${script_dir_path}"/add-webjar.sh
 
 # we force the dependencies download beforehand, so we won't have problems when running or building our apps in offline mode
 # see:
